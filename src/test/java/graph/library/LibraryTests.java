@@ -1,4 +1,4 @@
-package micronaut.library.template;
+package graph.library;
 
 /**
  * @author GoodforGod
