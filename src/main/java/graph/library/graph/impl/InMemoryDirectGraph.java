@@ -6,14 +6,15 @@ import graph.library.model.impl.DirectEdge;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public abstract class InMemoryDirectGraph<V extends Vertex, E extends DirectEdge<V>>
-        extends InMemoryGraph<V, E>
-        implements DirectGraph<V, E> {
+public abstract class InMemoryDirectGraph<V extends Vertex>
+        extends InMemoryGraph<V, DirectEdge<V>>
+        implements DirectGraph<V> {
 
     @Override
     public boolean addVertex(@NotNull V vertex) {
@@ -26,7 +27,17 @@ public abstract class InMemoryDirectGraph<V extends Vertex, E extends DirectEdge
     }
 
     @Override
-    public @NotNull List<E> getPath(@NotNull V from, @NotNull V to) {
+    public void traverse(Consumer<V> function) {
+        traverseGraph(function);
+    }
+
+    @Override
+    public @NotNull List<DirectEdge<V>> getPath(@NotNull V from, @NotNull V to) {
         return getDirectPath(from, to);
+    }
+
+    @Override
+    DirectEdge<V> getEdge(@NotNull V from, @NotNull V to) {
+        return new DirectEdge<>(from, to);
     }
 }

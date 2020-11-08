@@ -5,16 +5,16 @@ import graph.library.model.Vertex;
 import graph.library.model.impl.UndirectEdge;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public abstract class InMemoryUndirectGraph<V extends Vertex, E extends UndirectEdge<V>>
-        extends InMemoryGraph<V, E>
-        implements UndirectGraph<V, E> {
+public abstract class InMemoryUndirectGraph<V extends Vertex>
+        extends InMemoryGraph<V, UndirectEdge<V>>
+        implements UndirectGraph<V> {
 
     @Override
     public boolean addVertex(@NotNull V vertex) {
@@ -33,7 +33,17 @@ public abstract class InMemoryUndirectGraph<V extends Vertex, E extends Undirect
     }
 
     @Override
-    public @NotNull List<E> getPath(@NotNull V from, @NotNull V to) {
-        return Collections.emptyList();
+    public void traverse(Consumer<V> function) {
+        traverseGraph(function);
+    }
+
+    @Override
+    public @NotNull List<UndirectEdge<V>> getPath(@NotNull V from, @NotNull V to) {
+        return getDirectPath(from, to);
+    }
+
+    @Override
+    UndirectEdge<V> getEdge(@NotNull V from, @NotNull V to) {
+        return new UndirectEdge<>(from, to);
     }
 }

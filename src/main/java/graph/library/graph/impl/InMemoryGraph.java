@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 /**
  * @author Anton Kurako (GoodforGod)
@@ -33,8 +34,37 @@ abstract class InMemoryGraph<V extends Vertex, E extends Edge<V>> {
         return toVertices != null && toVertices.contains(to);
     }
 
+    void traverseGraph(Consumer<V> function) {
+        graph.keySet().forEach(function);
+    }
+
     @NotNull
     List<E> getDirectPath(@NotNull V from, @NotNull V to) {
+        final Set<V> init = graph.get(from);
+        if (init == null || init.isEmpty())
+            return Collections.emptyList();
+
+        if (init.contains(to))
+            return List.of(getEdge(from, to));
+
+        final List<E> edges = new ArrayList<>();
+        final Set<V> visited = new HashSet<>();
+        visited.add(from);
+
         return Collections.emptyList();
     }
+
+    private V findPath(Set<V> visited, Set<V> lookup, V target) {
+        for (V v : lookup) {
+            visited.add(v);
+            final Set<V> vs = graph.get(v);
+            if (vs.contains(target)) {
+                return v;
+            }
+        }
+
+        return null;
+    }
+
+    abstract E getEdge(@NotNull V from, @NotNull V to);
 }
