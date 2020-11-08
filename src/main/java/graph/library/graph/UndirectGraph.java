@@ -1,4 +1,4 @@
-package graph.library;
+package graph.library.graph;
 
 import graph.library.model.Edge;
 import graph.library.model.Vertex;
@@ -7,5 +7,6 @@ import graph.library.model.Vertex;
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public interface UndirectGraph<V extends Vertex, E extends Edge<V>> extends Graph<V, E> {
+public interface UndirectGraph<V extends Vertex, E extends Edge<V>>
+        extends Graph<V, E> {
 }

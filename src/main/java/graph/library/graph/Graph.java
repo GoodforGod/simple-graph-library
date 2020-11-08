@@ -1,4 +1,4 @@
-package graph.library;
+package graph.library.graph;
 
 import graph.library.model.Edge;
 import graph.library.model.Vertex;
@@ -12,10 +12,10 @@ import java.util.List;
  */
 public interface Graph<V extends Vertex, E extends Edge<V>> {
 
-    void addVertex(@NotNull V vertex);
+    boolean addVertex(@NotNull V vertex);
 
-    void addEdge(@NotNull V v1, @NotNull V v2);
+    boolean addEdge(@NotNull V from, @NotNull V to);
 
     @NotNull
-    List<E> getPath(@NotNull V v1, @NotNull V v2);
+    List<E> getPath(@NotNull V from, @NotNull V to);
 }

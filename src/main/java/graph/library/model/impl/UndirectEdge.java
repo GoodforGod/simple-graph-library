@@ -20,11 +20,11 @@ public class UndirectEdge<V extends Vertex> implements Edge<V> {
         this.to = to;
     }
 
-    public @NotNull V getFrom() {
+    public @NotNull V from() {
         return from;
     }
 
-    public @NotNull V getTo() {
+    public @NotNull V to() {
         return to;
     }
 
