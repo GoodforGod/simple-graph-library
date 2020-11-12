@@ -10,12 +10,12 @@ import java.util.Objects;
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public class UndirectEdge<V extends Vertex> implements Edge<V> {
+public class IndirectEdge<V extends Vertex> implements Edge<V> {
 
     private final V from;
     private final V to;
 
-    public UndirectEdge(@NotNull V from, @NotNull V to) {
+    public IndirectEdge(@NotNull V from, @NotNull V to) {
         this.from = from;
         this.to = to;
     }
@@ -34,13 +34,16 @@ public class UndirectEdge<V extends Vertex> implements Edge<V> {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UndirectEdge<?> that = (UndirectEdge<?>) o;
+        IndirectEdge<?> that = (IndirectEdge<?>) o;
         return from.equals(that.from) && to.equals(that.to)
                 || from.equals(that.to) && to.equals(that.from);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(from, to);
+        final int i = from.compareTo(to);
+        return (i == -1)
+                ? Objects.hash(to, from)
+                : Objects.hash(from, to);
     }
 }

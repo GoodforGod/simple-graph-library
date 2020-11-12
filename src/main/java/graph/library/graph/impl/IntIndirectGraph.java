@@ -6,6 +6,6 @@ import graph.library.model.impl.IntVertex;
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public class IntUndirectGraph extends InMemoryUndirectGraph<IntVertex> {
+public class IntIndirectGraph extends InMemoryIndirectGraph<IntVertex> {
 
 }

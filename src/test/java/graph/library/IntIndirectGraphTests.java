@@ -1,9 +1,9 @@
 package graph.library;
 
-import graph.library.graph.DirectGraph;
-import graph.library.graph.impl.IntDirectGraph;
-import graph.library.model.impl.DirectEdge;
+import graph.library.graph.IndirectGraph;
+import graph.library.graph.impl.IntIndirectGraph;
 import graph.library.model.impl.IntVertex;
+import graph.library.model.impl.IndirectEdge;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,22 +14,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author GoodforGod
  * @since 13.11.2019
  */
-class IntDirectGraphTests extends Assertions {
+class IntIndirectGraphTests extends Assertions {
 
-    private DirectGraph<IntVertex> getGraph() {
-        return new IntDirectGraph();
+    private IndirectGraph<IntVertex> getGraph() {
+        return new IntIndirectGraph();
     }
 
     @Test
     void addVertexSuccess() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex vertex = new IntVertex(1);
         assertTrue(graph.addVertex(vertex));
     }
 
     @Test
     void addVertexDuplicateFail() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v1 = new IntVertex(1);
         final IntVertex v2 = new IntVertex(1);
         assertTrue(graph.addVertex(v1));
@@ -38,7 +38,7 @@ class IntDirectGraphTests extends Assertions {
 
     @Test
     void addEdgeSuccess() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v1 = new IntVertex(1);
         final IntVertex v2 = new IntVertex(2);
         assertTrue(graph.addVertex(v1));
@@ -48,7 +48,7 @@ class IntDirectGraphTests extends Assertions {
 
     @Test
     void addEdgeNonExistEdgeFail() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v1 = new IntVertex(1);
         final IntVertex v2 = new IntVertex(2);
         assertTrue(graph.addVertex(v1));
@@ -57,7 +57,7 @@ class IntDirectGraphTests extends Assertions {
 
     @Test
     void getPathSuccess() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v11 = new IntVertex(11);
         final IntVertex v12 = new IntVertex(12);
         final IntVertex v21 = new IntVertex(21);
@@ -78,29 +78,28 @@ class IntDirectGraphTests extends Assertions {
         assertTrue(graph.addEdge(v12, v22));
         assertTrue(graph.addEdge(v22, v32));
 
-        final List<DirectEdge<IntVertex>> p1 = graph.getPath(v11, v41);
+        final List<IndirectEdge<IntVertex>> p1 = graph.getPath(v11, v41);
         assertEquals(3, p1.size());
-        final List<DirectEdge<IntVertex>> p11 = graph.getPath(v41, v11);
-        assertTrue(p11.isEmpty());
+        final List<IndirectEdge<IntVertex>> p11 = graph.getPath(v11, v41);
+        assertEquals(3, p11.size());
+        assertEquals(p1.get(1), p11.get(1));
 
-        final List<DirectEdge<IntVertex>> p2 = graph.getPath(v11, v21);
+        final List<IndirectEdge<IntVertex>> p2 = graph.getPath(v11, v21);
         assertEquals(1, p2.size());
-        final List<DirectEdge<IntVertex>> p22 = graph.getPath(v21, v11);
-        assertTrue(p22.isEmpty());
-        final List<DirectEdge<IntVertex>> p3 = graph.getPath(v12, v32);
+        final List<IndirectEdge<IntVertex>> p22 = graph.getPath(v11, v21);
+        assertEquals(1, p22.size());
+        assertEquals(p2.get(0), p22.get(0));
+        final List<IndirectEdge<IntVertex>> p3 = graph.getPath(v12, v32);
         assertEquals(2, p3.size());
-        final List<DirectEdge<IntVertex>> p33 = graph.getPath(v32, v12);
-        assertTrue(p33.isEmpty());
-        assertNotEquals(p3.get(0), p3.get(1));
-        assertNotEquals(p3.get(0).hashCode(), p3.get(1).hashCode());
-
-        final List<DirectEdge<IntVertex>> p4 = graph.getPath(v11, v32);
-        assertTrue(p4.isEmpty());
+        final List<IndirectEdge<IntVertex>> p33 = graph.getPath(v32, v12);
+        assertEquals(2, p33.size());
+        assertEquals(p3.get(0), p33.get(1));
+        assertEquals(p3.get(0).hashCode(), p33.get(1).hashCode());
     }
 
     @Test
     void getPathNotFound() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v11 = new IntVertex(11);
         final IntVertex v12 = new IntVertex(12);
         final IntVertex v21 = new IntVertex(21);
@@ -121,13 +120,13 @@ class IntDirectGraphTests extends Assertions {
         assertTrue(graph.addEdge(v12, v22));
         assertTrue(graph.addEdge(v22, v32));
 
-        final List<DirectEdge<IntVertex>> p4 = graph.getPath(v11, v32);
+        final List<IndirectEdge<IntVertex>> p4 = graph.getPath(v11, v32);
         assertTrue(p4.isEmpty());
     }
 
     @Test
     void traverseAppliedToAll() {
-        final DirectGraph<IntVertex> graph = getGraph();
+        final IndirectGraph<IntVertex> graph = getGraph();
         final IntVertex v11 = new IntVertex(11);
         final IntVertex v12 = new IntVertex(12);
         final IntVertex v21 = new IntVertex(21);

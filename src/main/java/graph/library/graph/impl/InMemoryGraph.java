@@ -47,23 +47,42 @@ abstract class InMemoryGraph<V extends Vertex, E extends Edge<V>> {
         if (init.contains(to))
             return List.of(getEdge(from, to));
 
-        final List<E> edges = new ArrayList<>();
         final Set<V> visited = new HashSet<>();
         visited.add(from);
 
-        return Collections.emptyList();
+        final List<V> path = findPath(from, visited, init, to);
+        if (path.isEmpty())
+            return Collections.emptyList();
+
+        final List<E> edges = new ArrayList<>(path.size() - 1);
+        for (int i = 1; i < path.size(); i++)
+            edges.add(getEdge(path.get(i - 1), path.get(i)));
+
+        return edges;
     }
 
-    private V findPath(Set<V> visited, Set<V> lookup, V target) {
+    private @NotNull List<V> findPath(V from, Set<V> visited, Set<V> lookup, V target) {
         for (V v : lookup) {
-            visited.add(v);
-            final Set<V> vs = graph.get(v);
-            if (vs.contains(target)) {
-                return v;
+            if (!visited.contains(v)) {
+                visited.add(v);
+                final Set<V> vs = graph.get(v);
+                if (vs.contains(target)) {
+                    final LinkedList<V> path = new LinkedList<>();
+                    path.add(from);
+                    path.add(v);
+                    path.add(target);
+                    return path;
+                } else {
+                    final List<V> found = findPath(v, visited, vs, target);
+                    if (!found.isEmpty() && found instanceof LinkedList) {
+                        ((LinkedList<V>) found).addFirst(from);
+                        return found;
+                    }
+                }
             }
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
     abstract E getEdge(@NotNull V from, @NotNull V to);

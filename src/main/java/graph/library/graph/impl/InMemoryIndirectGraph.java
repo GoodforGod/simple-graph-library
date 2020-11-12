@@ -1,8 +1,8 @@
 package graph.library.graph.impl;
 
-import graph.library.graph.UndirectGraph;
+import graph.library.graph.IndirectGraph;
 import graph.library.model.Vertex;
-import graph.library.model.impl.UndirectEdge;
+import graph.library.model.impl.IndirectEdge;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.function.Consumer;
  * @author Anton Kurako (GoodforGod)
  * @since 8.11.2020
  */
-public abstract class InMemoryUndirectGraph<V extends Vertex>
-        extends InMemoryGraph<V, UndirectEdge<V>>
-        implements UndirectGraph<V> {
+public abstract class InMemoryIndirectGraph<V extends Vertex>
+        extends InMemoryGraph<V, IndirectEdge<V>>
+        implements IndirectGraph<V> {
 
     @Override
     public boolean addVertex(@NotNull V vertex) {
@@ -38,12 +38,12 @@ public abstract class InMemoryUndirectGraph<V extends Vertex>
     }
 
     @Override
-    public @NotNull List<UndirectEdge<V>> getPath(@NotNull V from, @NotNull V to) {
+    public @NotNull List<IndirectEdge<V>> getPath(@NotNull V from, @NotNull V to) {
         return getDirectPath(from, to);
     }
 
     @Override
-    UndirectEdge<V> getEdge(@NotNull V from, @NotNull V to) {
-        return new UndirectEdge<>(from, to);
+    IndirectEdge<V> getEdge(@NotNull V from, @NotNull V to) {
+        return new IndirectEdge<>(from, to);
     }
 }
