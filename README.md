@@ -1,7 +1,6 @@
 # Natera Test Assigment
 
 ![Java CI](https://github.com/GoodforGod/simple-graph-library/workflows/Java%20CI/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_simple-graph-library&metric=alert_status)](https://sonarcloud.io/dashboard?id=GoodforGod_simple-graph-library)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_simple-graph-library&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_simple-graph-library)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_simple-graph-library&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_simple-graph-library)
 

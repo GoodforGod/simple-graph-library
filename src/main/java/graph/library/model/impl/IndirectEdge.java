@@ -42,7 +42,7 @@ public class IndirectEdge<V extends Vertex> implements Edge<V> {
     @Override
     public int hashCode() {
         final int i = from.compareTo(to);
-        return (i == -1)
+        return (i < 0)
                 ? Objects.hash(to, from)
                 : Objects.hash(from, to);
     }
